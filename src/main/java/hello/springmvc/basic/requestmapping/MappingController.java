@@ -40,7 +40,7 @@ public class MappingController {
         return "ok";
     }
 
-    @GetMapping("/mapping/users/{userId}")
+    @GetMapping("/users/{userId}")
     public String pathVariableTest(@PathVariable("userId") String userId){
 
         log.info("userId = {}" , userId);
@@ -50,7 +50,7 @@ public class MappingController {
     /**
      * PathVariable 사용 다중
      */
-    @GetMapping("/mapping/users/{userId}/orders/{orderId}")
+    @GetMapping("/users/{userId}/orders/{orderId}")
     public String mappingPath(@PathVariable("userId") String userId,
                               @PathVariable("orderId") Long orderId) {
         log.info("mappingPath userId={}, orderId={}", userId, orderId);
