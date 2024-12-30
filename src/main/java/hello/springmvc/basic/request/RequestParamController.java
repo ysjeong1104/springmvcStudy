@@ -1,9 +1,11 @@
 package hello.springmvc.basic.request;
 
+import hello.springmvc.basic.HelloData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -66,7 +68,7 @@ public class RequestParamController {
     public String requestParamRequired(
             @RequestParam(required = true) String username,
             @RequestParam(required = false) Integer age
-    ) { //권장
+    ) {
         /**
          *
          * int 기본형 데이터는 null넣을수 없음
@@ -84,7 +86,7 @@ public class RequestParamController {
     public String requestParamDefault(
             @RequestParam(required = true, defaultValue = "guest") String username,
             @RequestParam(required = false, defaultValue = "-1") Integer age
-    ) { //권장
+    ) {
         /**
          *
          * int 기본형 데이터는 null넣을수 없음
@@ -100,13 +102,39 @@ public class RequestParamController {
     @ResponseBody
     public String requestParamMap(
             @RequestParam Map<String, Object> paramMap
-    ) { //권장
+    ) {
         /**
          *
-         * 요청 파라미터 하나에 값이 여러개일 경우 MultiValueMap 사용 
+         * 요청 파라미터 하나에 값이 여러개일 경우 MultiValueMap 사용
          *
          */
         log.info("username ={}, age={}", paramMap.get("username"), paramMap.get("age"));
+
+        return "ok";
+
+    }
+
+    @RequestMapping("/model-attribute-v1")
+    @ResponseBody
+    public String modelAttributeV1(
+            @ModelAttribute HelloData helloData
+    ) { // 엔티티 객체로 받을 경우 이방식을 권장
+
+        log.info("username ={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("helloData ={}", helloData.toString() );
+
+        return "ok";
+
+    }
+
+    @RequestMapping("/model-attribute-v2")
+    @ResponseBody
+    public String modelAttributeV2(
+            HelloData helloData
+    ) {
+
+        log.info("username ={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("helloData ={}", helloData.toString() );
 
         return "ok";
 
